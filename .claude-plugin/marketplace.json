@@ -1,0 +1,5 @@
+{
+  "name": "usage-sandwich",
+  "owner": { "name": "AndySoMeta" },
+  "plugins": [{ "name": "usage-sandwich", "source": "./" }]
+}
