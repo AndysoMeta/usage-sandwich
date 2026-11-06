@@ -77,3 +77,46 @@ test('before any reading the pane says when the sandwich shows up', async ($, on
     await ui.unmount()
   }
 })
+
+const BAND = {
+  plugin: 'usage-sandwich',
+  component: 'AbovePrompt',
+  props: {
+    hasSurvey: false,
+    isWorking: false,
+    maxRows: 10,
+    bodyColumns: 80,
+    scroll: { offset: 0, bodyRows: 10 },
+    view: {},
+  },
+} as const
+
+test('the strip above the prompt shows a small sandwich, and the pane no longer opens by itself', async ($, on) => {
+  mock.clock(on, { now: NOW })
+  mock.store(on)
+  const opened: string[] = []
+  on('command.register', () => ({ value: { command: 'sandwich' } }))
+  on('ui.open', (_, e) => (opened.push(e.id), { value: { isPlaced: true } }))
+  on('ui.status', () => ({ value: undefined }))
+  on('ui.toast', () => ({ value: undefined }))
+  on('ui.notify', () => ({ value: { isSent: false, reason: 'no-surface' } }))
+  on('session.usage', () => ({ value: { startedAt: NOW, context: { window: 200000 }, rateLimits: [] } }))
+  on('session.start', (_, e) => ({ cwd: e.cwd }))
+  on('session.measure', (_, e) => ({ changed: e.changed }))
+
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  expect(opened.length).toBe(0)
+  await $.session.measure({ context: { window: 200000 }, rateLimits: limits(38, 20), changed: ['rateLimits'] })
+
+  const desk = await $.ui.mount({ ...BAND, surface: 'desktop' })
+  expect(await desk.find({ type: 'Svg' })).toBeDefined()
+  expect((await desk.find({ type: 'Text', text: /sandwich left/ }))?.text).toBe('62% of the sandwich left (session), resets in 2h 14m')
+  await desk.press({ key: 'open-graph' })
+  expect(opened).toEqual(['usage-sandwich'])
+  await desk.unmount()
+
+  const term = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await term.find({ type: 'Svg' })).toBeUndefined()
+  expect((await term.find({ type: 'Text', text: /sandwich left/ }))?.text).toContain('62% of the sandwich left')
+  await term.unmount()
+})

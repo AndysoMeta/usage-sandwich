@@ -1,6 +1,6 @@
 {
   "name": "usage-sandwich",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Your Claude plan usage as a sandwich that gets bitten as your limit runs down, with a usage graph",
   "types": "./types/index.d.ts",
   "author": {

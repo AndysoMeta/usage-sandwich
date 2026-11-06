@@ -112,7 +112,6 @@ export const register: Register = on => {
     }
     const usage = await $.session.usage()
     await record($, usage.rateLimits, usage.cost)
-    void $.ui.open({ id: PANE, title: TITLE })
 
     return ran
   })
@@ -129,6 +128,49 @@ export const register: Register = on => {
     await $.ui.open({ id: PANE, title: TITLE })
 
     return { text: 'Usage sandwich opened.' }
+  })
+
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    if (e.props.hasSurvey) return next(e)
+    const r = await read($, reading)
+    const top = worst(r)
+    if (!top) return next(e)
+
+    const els = $.ui.resolve(e)
+    const { Box, Text, Button } = els
+    const now = await $.clock.now()
+    const left = Math.max(0, Math.round(100 - top.w.percentUsed))
+    const resets = until(top.w.resetsAt, now)
+    const words = `${left}% of the sandwich left (${top.name})${resets ? `, resets in ${resets}` : ''}`
+    const graph = (
+      <Button key="open-graph" variant="secondary" onPress={() => $.ui.open({ id: PANE, title: TITLE, focus: true })}>
+        Graph
+      </Button>
+    )
+
+    const Svg = e.surface !== 'terminal' && 'Svg' in els ? els.Svg : undefined
+    if (!Svg) {
+      return (
+        <Box flexDirection="row" gap={1}>
+          <Text>
+            {textBar(top.w.percentUsed)} {words}
+          </Text>
+          {graph}
+        </Box>
+      )
+    }
+
+    const alt =
+      top.w.percentUsed >= 100
+        ? `Only crumbs left: your ${top.name} limit is used up.`
+        : `A sandwich with ${biteCount(top.w.percentUsed)} of 12 bites taken.`
+    return (
+      <Box flexDirection="row" gap={1} alignItems="center">
+        <Svg source={sandwichSvg(top.w.percentUsed)} alt={alt} width={48} height={34} />
+        <Text>{words}</Text>
+        {graph}
+      </Box>
+    )
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
