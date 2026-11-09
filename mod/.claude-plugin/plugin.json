@@ -1,0 +1,6 @@
+{
+  "name": "usage-burger",
+  "version": "0.1.0",
+  "description": "Sends your Claude plan usage to the floating burger app on this computer",
+  "author": { "name": "MetaFour LLC" }
+}

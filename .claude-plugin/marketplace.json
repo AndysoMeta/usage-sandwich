@@ -1,5 +1,13 @@
 {
-  "name": "usage-sandwich",
-  "owner": { "name": "AndySoMeta" },
-  "plugins": [{ "name": "usage-sandwich", "source": "./" }]
+  "name": "usage-burger",
+  "description": "The usage burger mod: sends your Claude plan usage to the floating burger app",
+  "owner": {
+    "name": "AndySoMeta"
+  },
+  "plugins": [
+    {
+      "name": "usage-burger",
+      "source": "./mod"
+    }
+  ]
 }

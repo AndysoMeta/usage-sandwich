@@ -1,0 +1,15 @@
+{
+  "name": "usage-burger",
+  "version": "0.1.0",
+  "description": "A floating burger that shows your Claude plan usage, listens when you talk, and passes what you say to your AI agent",
+  "main": "src/main.js",
+  "author": "MetaFour LLC",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "electron": "33.2.1"
+  }
+}

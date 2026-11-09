@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+<title>Usage burger</title>
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none;
+    font: 13px/1.35 "Segoe UI", system-ui, sans-serif; }
+  #wrap { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 6px; }
+  #bubble { max-width: 236px; max-height: 120px; overflow: auto; margin-bottom: 6px; padding: 8px 10px; border-radius: 12px;
+    background: #FFF8EC; color: #3B2414; border: 2px solid #B5743A; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+  #bubble:empty, .hide-words #bubble { display: none; }
+  #burger { width: 180px; height: 150px; cursor: grab; transition: filter .2s; }
+  #burger.listening { filter: drop-shadow(0 0 10px #4FA3FF); }
+  #burger.thinking { filter: drop-shadow(0 0 8px #F6C843); }
+  #burger:active { cursor: grabbing; }
+  #label { margin-top: 2px; padding: 2px 8px; border-radius: 10px; background: rgba(30,20,10,.75); color: #fff; font-size: 12px; white-space: nowrap; }
+  .hide-words #label { display: none; }
+  #ask { display: none; width: 220px; margin-top: 4px; padding: 6px 8px; border-radius: 8px; border: 2px solid #B5743A; font: inherit; }
+  #ask.on { display: block; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="bubble" aria-live="polite"></div>
+  <div id="burger" role="button" aria-label="Usage burger. Click to talk, right-click for options."></div>
+  <div id="label"></div>
+  <input id="ask" placeholder="Type to your agent, then Enter" maxlength="4000">
+</div>
+<script src="burger.js"></script>
+<script src="renderer.js"></script>
+</body>
+</html>
