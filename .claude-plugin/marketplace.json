@@ -1,5 +1,23 @@
 {
   "name": "usage-sandwich",
-  "owner": { "name": "AndySoMeta" },
-  "plugins": [{ "name": "usage-sandwich", "source": "./" }]
+  "description": "Claude plan usage as food: the sandwich mod, and the mod that feeds the floating burger app",
+  "owner": {
+    "name": "AndySoMeta"
+  },
+  "plugins": [
+    {
+      "name": "usage-sandwich",
+      "source": "./"
+    },
+    {
+      "name": "usage-burger",
+      "description": "Sends your Claude plan usage to the floating burger app (burger branch)",
+      "source": {
+        "source": "git-subdir",
+        "url": "AndySoMeta/usage-sandwich",
+        "path": "mod",
+        "ref": "burger"
+      }
+    }
+  ]
 }

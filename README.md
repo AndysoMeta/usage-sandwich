@@ -15,9 +15,13 @@ Limit numbers arrive with Claude's replies in Claude Code, so the sandwich updat
 
 The strip shows up on its own once Claude has reported your limits. Open the full view with the Graph button or `/sandwich`.
 
+## The floating burger
+
+Want it floating on top of everything instead, and something you can talk to? The [`burger` branch](https://github.com/AndySoMeta/usage-sandwich/tree/burger) is a fork of this mod: a burger you can drag anywhere on your screen that gets bitten as your usage runs down, listens when you click it, and passes what you say to your AI agent. Its mod, usage-burger, installs from this same marketplace; setup is in that branch's README.
+
 ## Install
 
-In Claude desktop: click + next to the prompt box, then Plugins, then Add marketplace with `AndySoMeta/usage-sandwich`, then Add plugin.
+In Claude desktop: click + next to the prompt box, then Plugins, then Add marketplace with `AndySoMeta/usage-sandwich`, then add the usage-sandwich plugin.
 
 At the prompt of a Claude Code terminal session:
 
